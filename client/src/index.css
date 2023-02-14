@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 500px;
+  height: 500px;
+  text-align: center;
+  border: 5px solid black;
+  border-radius: 15px;
+}
+
+.searchBar {
+  border: 1px solid gray;
+  border-radius: 15px;
+  margin-left: 10px;
+  margin-top: 5%;
+  height: 35px;
+  text-align: center;
+}
