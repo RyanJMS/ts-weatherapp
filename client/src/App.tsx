@@ -24,14 +24,15 @@ function App() {
       });
   };
 
-  console.log(searchInput);
-
   return (
     <div className="App">
       <div className="container">
         <div className="card">
           <div className="search">
             <input
+              onKeyDown={(e) => {
+                e.key === "Enter" ? getWeather(searchInput) : "";
+              }}
               type="text"
               className="searchBar"
               placeholder="Search Here"
