@@ -11,12 +11,26 @@ function App() {
     setSearchInput(e.target.value);
   };
 
+  const getWeather = (city: String) => {
+    fetch(
+      "https://api.openweathermap.org/data/2.5/weather?q=" +
+        city +
+        "&appid=" +
+        import.meta.env.VITE_API_KEY
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  console.log(searchInput);
+
   return (
     <div className="App">
       <div className="container">
         <div className="card">
           <div className="search">
-            <FontAwesomeIcon className="searchIcon" icon={faMagnifyingGlass} />
             <input
               type="text"
               className="searchBar"
@@ -24,6 +38,12 @@ function App() {
               onChange={handleChange}
               value={searchInput}
             />
+            <button onClick={() => getWeather(searchInput)}>
+              <FontAwesomeIcon
+                className="searchIcon"
+                icon={faMagnifyingGlass}
+              />
+            </button>
           </div>
         </div>
       </div>
