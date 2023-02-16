@@ -24,6 +24,13 @@
   border-radius: 15px;
   margin-right: 10px;
   margin-top: 5%;
+  margin-bottom: 5%;
   height: 35px;
   text-align: center;
+}
+
+.current {
+  margin: 0 auto;
+  border: 1px solid black;
+  border-radius: 15px;
 }

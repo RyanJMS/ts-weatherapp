@@ -5,24 +5,30 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
+  const [data, setData] = useState<Data | null>(null);
+
+  interface Data {
+    name: string;
+    weatherID: string;
+    cod: string;
+  }
 
   const handleChange = (e: any) => {
     e.preventDefault();
     setSearchInput(e.target.value);
   };
 
-  const getWeather = (city: String) => {
+  async function getWeather(q: string) {
     fetch(
       "https://api.openweathermap.org/data/2.5/weather?q=" +
-        city +
+        q +
         "&appid=" +
         import.meta.env.VITE_API_KEY
     )
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-  };
+      .then((data) => setData(data))
+      .catch((err) => console.error(err));
+  }
 
   return (
     <div className="App">
@@ -46,6 +52,16 @@ function App() {
               />
             </button>
           </div>
+          <>
+            {console.log(data)}
+            {data?.cod !== "400" && data?.cod !== "404" && data ? (
+              <div className="current">
+                <h2>{data?.name}</h2>
+              </div>
+            ) : (
+              <></>
+            )}
+          </>
         </div>
       </div>
     </div>
