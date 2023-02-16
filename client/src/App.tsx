@@ -65,7 +65,6 @@ function App() {
             </button>
           </div>
           <>
-            {console.log(data)}
             {data?.cod !== "400" && data?.cod !== "404" && data ? (
               <div className="current">
                 <h2 className="cityName">{data?.name}</h2>
@@ -80,24 +79,24 @@ function App() {
                 />
                 <p className="description">{data?.weather[0].main}</p>
                 <p>
-                  Temp: {(data?.main.temp - 273.15).toFixed(1)} &#8451;{" "}
-                  {((data?.main.temp - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  Temp: {Math.round(data?.main.temp - 273.15)} &#8451;{" "}
+                  {Math.round((data?.main.temp - 273.15) * (9 / 5) + 32)}{" "}
                   &#8457;
                 </p>
                 <p>
-                  Feels Like: {(data?.main.feels_like - 273.15).toFixed(1)}{" "}
+                  Feels Like: {Math.round(data?.main.feels_like - 273.15)}{" "}
                   &#8451;{" "}
-                  {((data?.main.feels_like - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  {Math.round((data?.main.feels_like - 273.15) * (9 / 5) + 32)}{" "}
                   &#8457;
                 </p>
                 <p>
-                  Min: {(data?.main.temp_min - 273.15).toFixed(1)} &#8451;{" "}
-                  {((data?.main.temp_min - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  Min: {Math.round(data?.main.temp_min - 273.15)} &#8451;{" "}
+                  {Math.round((data?.main.temp_min - 273.15) * (9 / 5) + 32)}{" "}
                   &#8457;
                 </p>
                 <p>
-                  Max: {(data?.main.temp_max - 273.15).toFixed(1)} &#8451;{" "}
-                  {((data?.main.temp_max - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  Max: {Math.round(data?.main.temp_max - 273.15)} &#8451;{" "}
+                  {Math.round((data?.main.temp_max - 273.15) * (9 / 5) + 32)}{" "}
                   &#8457;
                 </p>
               </div>
