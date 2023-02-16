@@ -11,6 +11,18 @@ function App() {
     name: string;
     weatherID: string;
     cod: string;
+    weather: [
+      {
+        main: string;
+        icon: string;
+      }
+    ];
+    main: {
+      temp: number;
+      feels_like: number;
+      temp_min: number;
+      temp_max: number;
+    };
   }
 
   const handleChange = (e: any) => {
@@ -56,7 +68,38 @@ function App() {
             {console.log(data)}
             {data?.cod !== "400" && data?.cod !== "404" && data ? (
               <div className="current">
-                <h2>{data?.name}</h2>
+                <h2 className="cityName">{data?.name}</h2>
+                <img
+                  className="weatherIcon"
+                  alt="weather-icon"
+                  src={
+                    `http://openweathermap.org/img/wn/` +
+                    data?.weather[0].icon +
+                    `@2x.png`
+                  }
+                />
+                <p className="description">{data?.weather[0].main}</p>
+                <p>
+                  Temp: {(data?.main.temp - 273.15).toFixed(1)} &#8451;{" "}
+                  {((data?.main.temp - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  &#8457;
+                </p>
+                <p>
+                  Feels Like: {(data?.main.feels_like - 273.15).toFixed(1)}{" "}
+                  &#8451;{" "}
+                  {((data?.main.feels_like - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  &#8457;
+                </p>
+                <p>
+                  Min: {(data?.main.temp_min - 273.15).toFixed(1)} &#8451;{" "}
+                  {((data?.main.temp_min - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  &#8457;
+                </p>
+                <p>
+                  Max: {(data?.main.temp_max - 273.15).toFixed(1)} &#8451;{" "}
+                  {((data?.main.temp_max - 273.15) * (9 / 5) + 32).toFixed(1)}{" "}
+                  &#8457;
+                </p>
               </div>
             ) : (
               <></>
