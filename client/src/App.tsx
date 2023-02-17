@@ -25,6 +25,24 @@ function App() {
     };
   }
 
+  let tempC;
+  let tempF;
+  let feelsC;
+  let feelsF;
+  let minC;
+  let minF;
+  let maxC;
+  let maxF;
+  if (data) {
+    tempC = Math.round(data?.main.temp - 273.15);
+    tempF = Math.round((data?.main.temp - 273.15) * (9 / 5) + 32);
+    feelsC = Math.round(data?.main.feels_like - 273.15);
+    feelsF = Math.round((data?.main.feels_like - 273.15) * (9 / 5) + 32);
+    minC = Math.round(data?.main.temp_min - 273.15);
+    minF = Math.round((data?.main.temp_min - 273.15) * (9 / 5) + 32);
+    maxC = Math.round(data?.main.temp_max - 273.15);
+    maxF = Math.round((data?.main.temp_max - 273.15) * (9 / 5) + 32);
+  }
   const handleChange = (e: any) => {
     e.preventDefault();
     setSearchInput(e.target.value);
@@ -79,25 +97,16 @@ function App() {
                 />
                 <p className="description">{data?.weather[0].main}</p>
                 <p>
-                  Temp: {Math.round(data?.main.temp - 273.15)} &#8451;{" "}
-                  {Math.round((data?.main.temp - 273.15) * (9 / 5) + 32)}{" "}
-                  &#8457;
+                  Temp: {tempC} &#8451; {tempF} &#8457;
                 </p>
                 <p>
-                  Feels Like: {Math.round(data?.main.feels_like - 273.15)}{" "}
-                  &#8451;{" "}
-                  {Math.round((data?.main.feels_like - 273.15) * (9 / 5) + 32)}{" "}
-                  &#8457;
+                  Feels Like: {feelsC} &#8451; {feelsF} &#8457;
                 </p>
                 <p>
-                  Min: {Math.round(data?.main.temp_min - 273.15)} &#8451;{" "}
-                  {Math.round((data?.main.temp_min - 273.15) * (9 / 5) + 32)}{" "}
-                  &#8457;
+                  Min: {feelsC} &#8451; {feelsF} &#8457;
                 </p>
                 <p>
-                  Max: {Math.round(data?.main.temp_max - 273.15)} &#8451;{" "}
-                  {Math.round((data?.main.temp_max - 273.15) * (9 / 5) + 32)}{" "}
-                  &#8457;
+                  Max: {maxC} &#8451; {maxF} &#8457;
                 </p>
               </div>
             ) : (
