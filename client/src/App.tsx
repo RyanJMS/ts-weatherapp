@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Dashboard } from "./components/Dashboard";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
@@ -33,6 +34,9 @@ function App() {
   let minF;
   let maxC;
   let maxF;
+  let icon = data?.weather[0]?.icon;
+  let description = data?.weather[0]?.main;
+  let name = data?.name;
   if (data) {
     tempC = Math.round(data?.main.temp - 273.15);
     tempF = Math.round((data?.main.temp - 273.15) * (9 / 5) + 32);
@@ -84,31 +88,21 @@ function App() {
           </div>
           <>
             {data?.cod !== "400" && data?.cod !== "404" && data ? (
-              <div className="current">
-                <h2 className="cityName">{data?.name}</h2>
-                <img
-                  className="weatherIcon"
-                  alt="weather-icon"
-                  src={
-                    `http://openweathermap.org/img/wn/` +
-                    data?.weather[0].icon +
-                    `@2x.png`
-                  }
-                />
-                <p className="description">{data?.weather[0].main}</p>
-                <p>
-                  Temp: {tempC} &#8451; {tempF} &#8457;
-                </p>
-                <p>
-                  Feels Like: {feelsC} &#8451; {feelsF} &#8457;
-                </p>
-                <p>
-                  Min: {feelsC} &#8451; {feelsF} &#8457;
-                </p>
-                <p>
-                  Max: {maxC} &#8451; {maxF} &#8457;
-                </p>
-              </div>
+              <Dashboard
+                handleChange={handleChange}
+                getWeather={getWeather}
+                tempC={tempC}
+                tempF={tempF}
+                feelsC={feelsC}
+                feelsF={feelsF}
+                minC={minC}
+                minF={minF}
+                maxC={maxC}
+                maxF={maxF}
+                icon={icon}
+                name={name}
+                description={description}
+              />
             ) : (
               <></>
             )}
