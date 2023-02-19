@@ -1,7 +1,5 @@
 import { useState } from "react";
 import "./index.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Dashboard } from "./components/Dashboard";
 
 function App() {
@@ -24,6 +22,10 @@ function App() {
       temp_min: number;
       temp_max: number;
     };
+    sys: {
+      country: string;
+    };
+    timezone: any;
   }
 
   let tempC;
@@ -37,6 +39,8 @@ function App() {
   let icon = data?.weather[0]?.icon;
   let description = data?.weather[0]?.main;
   let name = data?.name;
+  let country = data?.sys?.country;
+  let timezone = data?.timezone;
   if (data) {
     tempC = Math.round(data?.main.temp - 273.15);
     tempF = Math.round((data?.main.temp - 273.15) * (9 / 5) + 32);
@@ -79,14 +83,9 @@ function App() {
               onChange={handleChange}
               value={searchInput}
             />
-            <button onClick={() => getWeather(searchInput)}>
-              <FontAwesomeIcon
-                className="searchIcon"
-                icon={faMagnifyingGlass}
-              />
-            </button>
           </div>
           <>
+            {console.log(data)}
             {data?.cod !== "400" && data?.cod !== "404" && data ? (
               <Dashboard
                 handleChange={handleChange}
@@ -102,6 +101,8 @@ function App() {
                 icon={icon}
                 name={name}
                 description={description}
+                country={country}
+                timezone={timezone}
               />
             ) : (
               <></>
