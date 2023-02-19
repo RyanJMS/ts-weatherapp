@@ -30,8 +30,8 @@ export function Dashboard(props: Dashboard) {
   const [localTime, setLocalTime] = useState<string>("");
   const [isDaytime, setIsDaytime] = useState<boolean>(true);
   useEffect(() => {
+    setIsLoading(true);
     const intervalId = setInterval(() => {
-      setIsLoading(true);
       const currentTime = moment()
         .utcOffset(props.timezone / 60)
         .format("YYYY-MM-DD h:mm:ss A");
@@ -44,14 +44,17 @@ export function Dashboard(props: Dashboard) {
           secondsSince >= props.sunrise && secondsSince <= props.sunset
         );
       }
+      setIsLoading(false);
     }, 1000);
-    setIsLoading(false);
+
     return () => clearInterval(intervalId);
   }, [props.timezone]);
 
   return (
     <>
-      {isLoading && (
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
         <div className="weather-dashboard">
           <div className="location">
             {props.name}, {props.country}

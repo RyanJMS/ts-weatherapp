@@ -91,3 +91,45 @@ img {
   height: 64px;
   margin-right: 20px;
 }
+
+@media only screen and (max-width: 768px) {
+  .container {
+    align-items: normal;
+  }
+  .location h2 {
+    font-size: 24px;
+  }
+
+  .location p {
+    font-size: 16px;
+  }
+
+  .weather img {
+    width: 80px;
+  }
+
+  .temperature {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .container {
+    align-items: normal;
+  }
+  .location h2 {
+    font-size: 20px;
+  }
+
+  .location p {
+    font-size: 14px;
+  }
+
+  .weather img {
+    width: 60px;
+  }
+
+  .temperature {
+    font-size: 20px;
+  }
+}
