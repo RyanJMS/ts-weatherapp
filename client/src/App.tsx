@@ -24,6 +24,8 @@ function App() {
     };
     sys: {
       country: string;
+      sunrise: any;
+      sunset: any;
     };
     timezone: any;
   }
@@ -41,6 +43,9 @@ function App() {
   let name = data?.name;
   let country = data?.sys?.country;
   let timezone = data?.timezone;
+  let sunrise = data?.sys?.sunrise;
+  let sunset = data?.sys?.sunset;
+
   if (data) {
     tempC = Math.round(data?.main.temp - 273.15);
     tempF = Math.round((data?.main.temp - 273.15) * (9 / 5) + 32);
@@ -86,6 +91,7 @@ function App() {
           </div>
           <>
             {console.log(data)}
+            {console.log(data?.sys?.sunset, data?.sys?.sunrise, data?.timezone)}
             {data?.cod !== "400" && data?.cod !== "404" && data ? (
               <Dashboard
                 handleChange={handleChange}
@@ -103,6 +109,8 @@ function App() {
                 description={description}
                 country={country}
                 timezone={timezone}
+                sunrise={sunrise}
+                sunset={sunset}
               />
             ) : (
               <></>

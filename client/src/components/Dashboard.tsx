@@ -21,26 +21,36 @@ interface Dashboard {
   handleChange: Function;
   country?: string;
   timezone?: any;
+  sunrise?: any;
+  sunset?: any;
 }
 
 export function Dashboard(props: Dashboard) {
-  const [showDiv, setShowDiv] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [localTime, setLocalTime] = useState<string>("");
-
+  const [isDaytime, setIsDaytime] = useState<boolean>(true);
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const localTime = moment()
+      const currentTime = moment()
         .utcOffset(props.timezone / 60)
-        .format("YYYY-MM-DD h:mm:ss A"); // Create a Moment.js object for the current time in the specified timezone
-      setLocalTime(localTime);
-    }, 1000); // Update the local time every second
+        .format("YYYY-MM-DD h:mm:ss A");
+      setLocalTime(currentTime);
 
-    return () => clearInterval(intervalId); // Clean up the interval when the component unmounts
+      const now = moment().utcOffset(props.timezone / 60);
+      const secondsSince = now.unix();
+      if (props.sunrise && props.sunset) {
+        setIsDaytime(
+          secondsSince >= props.sunrise && secondsSince <= props.sunset
+        );
+      }
+    }, 500);
+
+    return () => clearInterval(intervalId);
   }, [props.timezone]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setShowDiv(true);
+      setIsLoading(true);
     }, 500);
 
     return () => clearTimeout(timeoutId);
@@ -48,12 +58,12 @@ export function Dashboard(props: Dashboard) {
 
   return (
     <>
-      {showDiv && (
+      {isLoading && (
         <div className="weather-dashboard">
           <div className="location">
             {props.name}, {props.country}
             <div className="img-wrapper">
-              {props ? (
+              {isDaytime ? (
                 <img className="sun" src={sun} />
               ) : (
                 <img className="moon" src={moon} />
