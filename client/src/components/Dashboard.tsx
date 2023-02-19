@@ -26,11 +26,12 @@ interface Dashboard {
 }
 
 export function Dashboard(props: Dashboard) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [localTime, setLocalTime] = useState<string>("");
   const [isDaytime, setIsDaytime] = useState<boolean>(true);
   useEffect(() => {
     const intervalId = setInterval(() => {
+      setIsLoading(true);
       const currentTime = moment()
         .utcOffset(props.timezone / 60)
         .format("YYYY-MM-DD h:mm:ss A");
@@ -43,18 +44,10 @@ export function Dashboard(props: Dashboard) {
           secondsSince >= props.sunrise && secondsSince <= props.sunset
         );
       }
-    }, 500);
-
+    }, 1000);
+    setIsLoading(false);
     return () => clearInterval(intervalId);
   }, [props.timezone]);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsLoading(true);
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
 
   return (
     <>
