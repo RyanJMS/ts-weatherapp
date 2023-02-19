@@ -1,6 +1,6 @@
 import React, { useEffect, useState, FC } from "react";
 import "../index.css";
-import moment from "moment";
+import moment from "moment-timezone";
 
 import moon from "../assets/moon-svgrepo-com.svg";
 import sun from "../assets/sun-svgrepo-com.svg";
@@ -24,19 +24,19 @@ interface Dashboard {
 }
 
 export function Dashboard(props: Dashboard) {
-  const [currentTime, setCurrentTime] = useState("");
   const [showDiv, setShowDiv] = useState(false);
+  const [localTime, setLocalTime] = useState<string>("");
+
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const currentMoment = moment();
-      const currentMomentFormatted = currentMoment.format(
-        "YYYY-MM-DD h:mm:ss A"
-      );
-      setCurrentTime(currentMomentFormatted);
-    }, 500);
+      const localTime = moment()
+        .utcOffset(props.timezone / 60)
+        .format("YYYY-MM-DD h:mm:ss A"); // Create a Moment.js object for the current time in the specified timezone
+      setLocalTime(localTime);
+    }, 1000); // Update the local time every second
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearInterval(intervalId); // Clean up the interval when the component unmounts
+  }, [props.timezone]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -59,7 +59,7 @@ export function Dashboard(props: Dashboard) {
                 <img className="moon" src={moon} />
               )}
             </div>
-            <div className="time">{currentTime}</div>
+            <div className="time">{localTime}</div>
           </div>
           <div className="temperature">
             {props.tempC}&#8451; {props.tempF}&#8457;
