@@ -89,8 +89,9 @@ function App() {
               value={searchInput}
             />
           </div> */}
-          <Search getWeather={getWeather} />
+          <Search data={data} getWeather={getWeather} />
           <>
+            {console.log(data)}
             {data?.cod !== "400" && data?.cod !== "404" && data ? (
               <Dashboard
                 handleChange={handleChange}

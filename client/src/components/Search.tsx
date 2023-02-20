@@ -8,12 +8,14 @@ interface City {
 
 interface Props {
   getWeather: (cityName: string) => void;
+  data: any;
 }
 
-const Search = ({ getWeather }: Props) => {
+const Search = ({ getWeather, data }: Props) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState<City[]>([]);
-
+  const [cityNotFound, setCityNotFound] = useState("");
+  const [notFound, setNotFound] = useState<boolean>(false);
   const getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
@@ -37,14 +39,36 @@ const Search = ({ getWeather }: Props) => {
     _: any,
     { suggestionValue }: { suggestionValue: string }
   ) => {
-    setInputValue(suggestionValue);
-    getWeather(suggestionValue);
+    const city = cities.find(
+      (c) => c.name.toLowerCase() === suggestionValue.toLowerCase()
+    );
+    if (city) {
+      setNotFound(false);
+      setInputValue(suggestionValue);
+      getWeather(suggestionValue);
+    } else {
+      setNotFound(true);
+      setCityNotFound(suggestionValue);
+      // handle error, e.g. display an error message
+      console.error(`City "${suggestionValue}" not found.`);
+    }
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      getWeather(inputValue);
+      const city = cities.find(
+        (c) => c.name.toLowerCase() === inputValue.toLowerCase()
+      );
+      if (city) {
+        setNotFound(false);
+        getWeather(inputValue);
+      } else {
+        // handle error, e.g. display an error message
+        console.error(`City "${inputValue}" not found.`);
+        setNotFound(true);
+        setCityNotFound(inputValue);
+      }
     }
   };
 
@@ -59,16 +83,23 @@ const Search = ({ getWeather }: Props) => {
   };
 
   return (
-    <Autosuggest
-      suggestions={suggestions}
-      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
-      onSuggestionSelected={onSuggestionSelected}
-      getSuggestionValue={(city) => city.name}
-      renderSuggestion={renderSuggestion}
-      inputProps={inputProps}
-      theme={theme}
-    />
+    <>
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        onSuggestionSelected={onSuggestionSelected}
+        getSuggestionValue={(city) => city.name}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        theme={theme}
+      />
+      {notFound ? (
+        <p className="notFound">{cityNotFound} not found. Please try again.</p>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 
