@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { ReactEventHandler, useState } from "react";
 import "./index.css";
 import { Dashboard } from "./components/Dashboard";
-
+import Search from "./components/Search";
 function App() {
   const [searchInput, setSearchInput] = useState("");
   const [data, setData] = useState<Data | null>(null);
@@ -77,7 +77,7 @@ function App() {
     <div className="App">
       <div className="container">
         <div className="card">
-          <div className="search">
+          {/* <div className="search">
             <input
               onKeyDown={(e) => {
                 e.key === "Enter" ? getWeather(searchInput) : "";
@@ -88,10 +88,9 @@ function App() {
               onChange={handleChange}
               value={searchInput}
             />
-          </div>
+          </div> */}
+          <Search getWeather={getWeather} />
           <>
-            {console.log(data)}
-            {console.log(data?.sys?.sunset, data?.sys?.sunrise, data?.timezone)}
             {data?.cod !== "400" && data?.cod !== "404" && data ? (
               <Dashboard
                 handleChange={handleChange}

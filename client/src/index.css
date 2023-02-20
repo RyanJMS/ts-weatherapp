@@ -21,7 +21,7 @@
   color: white;
 }
 
-.searchBar {
+#searchBar {
   border: 1px solid gray;
   border-radius: 15px;
   margin-right: 10px;

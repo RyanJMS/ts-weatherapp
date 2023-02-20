@@ -1,7 +1,6 @@
 import React, { useEffect, useState, FC } from "react";
 import "../index.css";
 import moment from "moment-timezone";
-
 import moon from "../assets/moon-svgrepo-com.svg";
 import sun from "../assets/sun-svgrepo-com.svg";
 
@@ -29,6 +28,7 @@ export function Dashboard(props: Dashboard) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [localTime, setLocalTime] = useState<string>("");
   const [isDaytime, setIsDaytime] = useState<boolean>(true);
+
   useEffect(() => {
     setIsLoading(true);
     const intervalId = setInterval(() => {
