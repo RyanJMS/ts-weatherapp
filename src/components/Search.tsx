@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import cities from "../assets/city_names.json";
 import theme from "./theme.module.css";
@@ -26,6 +26,16 @@ const Search = ({ getWeather, data }: Props) => {
           (city) => city.name.toLowerCase().slice(0, inputLength) === inputValue
         );
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setNotFound(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [notFound]);
 
   const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
     setSuggestions(getSuggestions(value));
@@ -95,7 +105,11 @@ const Search = ({ getWeather, data }: Props) => {
         theme={theme}
       />
       {notFound ? (
-        <p className="notFound">{cityNotFound} not found. Please try again.</p>
+        <p className="notFound">
+          {cityNotFound
+            ? `${cityNotFound} not found. Please try again.`
+            : "Please enter a city. "}
+        </p>
       ) : (
         ""
       )}

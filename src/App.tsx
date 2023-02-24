@@ -2,6 +2,7 @@ import { ReactEventHandler, useState } from "react";
 import "./index.css";
 import { Dashboard } from "./components/Dashboard";
 import Search from "./components/Search";
+
 function App() {
   const [searchInput, setSearchInput] = useState("");
   const [data, setData] = useState<Data | null>(null);
