@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
 import cities from "../assets/city_names.json";
 import theme from "./theme.module.css";
+
 interface City {
   name: string;
 }
 
 interface Props {
   getWeather: (cityName: string) => void;
-  data: any;
+  data?: any;
 }
 
 const Search = ({ getWeather, data }: Props) => {

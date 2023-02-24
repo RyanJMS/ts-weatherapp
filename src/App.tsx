@@ -17,6 +17,7 @@ function App() {
         icon: string;
       }
     ];
+
     main: {
       temp: number;
       feels_like: number;
@@ -73,6 +74,8 @@ function App() {
       .then((data) => setData(data))
       .catch((err) => console.error(err));
   }
+
+  console.log(data?.weather);
 
   return (
     <div className="App">
