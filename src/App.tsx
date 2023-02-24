@@ -75,8 +75,6 @@ function App() {
       .catch((err) => console.error(err));
   }
 
-  console.log(data?.weather);
-
   return (
     <div className="App">
       <div className="container">
