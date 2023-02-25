@@ -5,6 +5,7 @@ import theme from "./theme.module.css";
 
 interface City {
   name: string;
+  country?: string;
 }
 
 interface Props {
