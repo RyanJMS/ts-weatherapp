@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Autosuggest from "react-autosuggest";
-import cities from "../assets/city_names.json";
+import cityList from "../assets/city_names.json";
 import theme from "./theme.module.css";
 
 interface City {
@@ -18,6 +18,9 @@ const Search = ({ getWeather, data }: Props) => {
   const [suggestions, setSuggestions] = useState<City[]>([]);
   const [cityNotFound, setCityNotFound] = useState("");
   const [notFound, setNotFound] = useState<boolean>(false);
+
+  const cities: any = cityList;
+
   const getSuggestions = (value: string) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
@@ -25,7 +28,8 @@ const Search = ({ getWeather, data }: Props) => {
     return inputLength === 0
       ? []
       : cities.filter(
-          (city) => city.name.toLowerCase().slice(0, inputLength) === inputValue
+          (city: any) =>
+            city.name.toLowerCase().slice(0, inputLength) === inputValue
         );
   };
 
@@ -52,7 +56,7 @@ const Search = ({ getWeather, data }: Props) => {
     { suggestionValue }: { suggestionValue: string }
   ) => {
     const city = cities.find(
-      (c) => c.name.toLowerCase() === suggestionValue.toLowerCase()
+      (c: any) => c.name.toLowerCase() === suggestionValue.toLowerCase()
     );
     if (city) {
       setNotFound(false);
@@ -70,7 +74,7 @@ const Search = ({ getWeather, data }: Props) => {
     if (event.key === "Enter") {
       event.preventDefault();
       const city = cities.find(
-        (c) => c.name.toLowerCase() === inputValue.toLowerCase()
+        (c: any) => c.name.toLowerCase() === inputValue.toLowerCase()
       );
       if (city) {
         setNotFound(false);
@@ -84,7 +88,9 @@ const Search = ({ getWeather, data }: Props) => {
     }
   };
 
-  const renderSuggestion = (city: City) => <div>{city.name}</div>;
+  const renderSuggestion = (city: City) => (
+    <div>{`${city.name}, ${city.country}`}</div>
+  );
 
   const inputProps = {
     placeholder: "Search for a city",
